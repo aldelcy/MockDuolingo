@@ -39,7 +39,7 @@ function reset(){
 	$('.answer').empty();
 
 	for( var choice of choices ) {
-		$('.choices').append("<div id='"+choice+"' class='holder'><button class='choice'>"+choice+"</button></div>")
+		$('.choices').append('<div id="'+choice+'" class="holder"><button class="choice">'+choice+'</button></div>')
 	}
 
 	window.shuffle('.translate .choices');
@@ -47,6 +47,7 @@ function reset(){
 reset();
 
 function checkProgress() {
+	$('.check').attr('disabled', true);
 	setTimeout(function(){
 		if( Game.progress == Game.max ) {
 			Game.showResult();
@@ -57,6 +58,7 @@ function checkProgress() {
 }
 
 function checkAnswer(){
+	$('.check').attr('disabled', true);
 	let answer = $('.answer .choice'),
 			phrase = [],
 			status = 'failure';
@@ -89,12 +91,11 @@ function activateCheck(){
 }
 
 $(document).on('click', '.holder', function() {
-	var holder = $(this);
-	var choice = holder.find('.choice');
+	var holder = $(this),
+			choice = holder.find('.choice');
 
-	holder.css('width', choice.width + 'px');
-	holder.css('heigth', choice.heigth + 'px');
-
+	holder.css('width', choice.outerWidth() + 'px');
+	holder.css('height', choice.outerHeight() + 'px');
 	choice.appendTo('.answer');
 	activateCheck();
 })
